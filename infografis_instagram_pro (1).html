@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografis Edukasi Instagram 4:5 - Literary Devices</title>
+    <!-- Include html2canvas for JPG download -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        /* Base Settings & Typography */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2c3e50;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Top Panel Control */
+        .control-panel {
+            background-color: #ffffff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+        .control-panel h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #1e3a5f;
+        }
+        .status-msg {
+            font-size: 12px;
+            color: #10b981;
+            margin-top: 5px;
+            font-weight: bold;
+            display: none;
+        }
+
+        /* Instagram 4:5 Aspect Ratio Container (1080x1350 scaled) */
+        .canvas-wrapper {
+            box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 100px; /* Space for fixed bottom menu */
+        }
+        
+        #infographic-canvas {
+            background-color: #fffdfa;
+            width: 432px;   /* 1080 scaled down by 2.5 */
+            height: 540px;  /* 1350 scaled down by 2.5 */
+            padding: 25px 20px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .main-title {
+            font-family: 'Georgia', serif;
+            font-size: 32px;
+            font-weight: 900;
+            color: #1a2f4c;
+            line-height: 1.1;
+            outline: none;
+        }
+        .accent-title-wrapper {
+            display: inline-block;
+            margin: 5px 0;
+        }
+        .accent-title {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            font-style: italic;
+            color: #b37d7d;
+            background-color: #eedcd3;
+            padding: 1px 18px;
+            border-radius: 40px;
+            display: inline-block;
+            outline: none;
+        }
+        .tagline {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            font-weight: 700;
+            outline: none;
+        }
+
+        /* Device Items Layout */
+        .device-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .device-item {
+            display: flex;
+            align-items: center;
+            border-radius: 12px;
+            padding: 8px 12px;
+            position: relative;
+        }
+
+        /* Left Content Area */
+        .left-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1.2;
+        }
+        .icon-container {
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .icon-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .icon-circle span {
+            font-size: 20px;
+            user-select: none;
+        }
+        .icon-hint {
+            position: absolute;
+            bottom: -4px;
+            right: -4px;
+            background: #1e3a5f;
+            color: white;
+            border-radius: 50%;
+            width: 14px;
+            height: 14px;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+        
+        /* Dropdown Emoji Picker */
+        .emoji-picker {
+            display: none;
+            position: absolute;
+            top: 42px;
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 5px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 5px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .emoji-picker span {
+            font-size: 18px;
+            cursor: pointer;
+            padding: 3px;
+            border-radius: 4px;
+            transition: background 0.1s;
+        }
+        .emoji-picker span:hover {
+            background: #e2e8f0;
+        }
+
+        .text-block {
+            display: flex;
+            flex-direction: column;
+        }
+        .item-title {
+            font-size: 12px;
+            font-weight: 800;
+            color: #1a2f4c;
+            text-transform: uppercase;
+            outline: none;
+        }
+        .item-desc {
+            font-size: 10px;
+            color: #4a5568;
+            line-height: 1.3;
+            outline: none;
+        }
+
+        /* Divider Line */
+        .divider {
+            width: 1px;
+            height: 32px;
+            background-color: rgba(0, 0, 0, 0.08);
+            margin: 0 8px;
+        }
+
+        /* Right Example Area */
+        .right-content {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+        }
+        .example-label {
+            font-size: 10px;
+            font-style: italic;
+            font-weight: 600;
+            outline: none;
+        }
+        .example-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: #2d3748;
+            line-height: 1.2;
+            outline: none;
+        }
+
+        /* Color Variations */
+        .item-1 { background-color: #fdf1e7; } .item-1 .icon-circle { background-color: #fbd6bc; } .item-1 .example-label { color: #d97706; }
+        .item-2 { background-color: #edf4ec; } .item-2 .icon-circle { background-color: #caddc8; } .item-2 .example-label { color: #166534; }
+        .item-3 { background-color: #f3eef9; } .item-3 .icon-circle { background-color: #e2d5f3; } .item-3 .example-label { color: #6b21a8; }
+        .item-4 { background-color: #fef6e7; } .item-4 .icon-circle { background-color: #fde4bc; } .item-4 .example-label { color: #b45309; }
+        .item-5 { background-color: #eaf3f9; } .item-5 .icon-circle { background-color: #cbe1f2; } .item-5 .example-label { color: #1d4ed8; }
+
+        /* Footer Section */
+        .footer-section {
+            text-align: center;
+            border-top: 1px dashed #e2e8f0;
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+        .footer-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #4a5568;
+            outline: none;
+        }
+        .closing-wish {
+            font-family: 'Georgia', serif;
+            font-size: 16px;
+            font-style: italic;
+            color: #b37d7d;
+            font-weight: bold;
+            outline: none;
+        }
+
+        /* Interactive Editing Highlight */
+        [contenteditable="true"]:focus {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 0 0 2px #3b82f6;
+            border-radius: 3px;
+        }
+
+        /* Toolbar Menu */
+        .toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1a2f4c;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 -5px 25px rgba(0,0,0,0.3);
+            z-index: 100;
+        }
+        .btn {
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: opacity 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn-draft { background-color: #f59e0b; }
+        .btn-reset { background-color: #ef4444; }
+        .btn-download { background-color: #10b981; }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <h3>Alat Kontrol Editor Infografis (Ukuran IG 4:5)</h3>
+        <p style="font-size: 12px; color: #64748b;">Klik teks langsung untuk mengedit. Klik ikon lingkaran untuk mengganti emoji.</p>
+        <div id="status" class="status-msg">Draft berhasil disimpan otomatis ke memori browser!</div>
+    </div>
+
+    <!-- 4:5 Ratio Visual Canvas Wrapper -->
+    <div class="canvas-wrapper">
+        <div id="infographic-canvas">
+            
+            <!-- Header -->
+            <div class="header-section">
+                <h1 class="main-title" contenteditable="true" id="txt-title">Literary Devices</h1>
+                <div class="accent-title-wrapper">
+                    <div class="accent-title" contenteditable="true" id="txt-accent">Explained Simply</div>
+                </div>
+                <p class="tagline" contenteditable="true" id="txt-tagline">Tools writers use to make words more powerful.</p>
+            </div>
+
+            <!-- List of 5 items -->
+            <div class="device-list">
+                
+                <!-- Item 1 -->
+                <div class="device-item item-1">
+                    <div class="left-content">
+                        <div class="icon-container" onclick="toggleEmojiPicker(1)">
+                            <div class="icon-circle"><span id="ico-1">☀️</span></div>
+                            <div class="icon-hint">✎</div>
+                            <div class="emoji-picker" id="picker-1">
+                                <span onclick="changeEmoji(1, '☀️')">☀️</span>
+                                <span onclick="changeEmoji(1, '☁️')">☁️</span>
+                                <span onclick="changeEmoji(1, '🔥')">🔥</span>
+                                <span onclick="changeEmoji(1, '💡')">💡</span>
+                                <span onclick="changeEmoji(1, '⭐')">⭐</span>
+                                <span onclick="changeEmoji(1, '🌍')">🌍</span>
+                                <span onclick="changeEmoji(1, '🎯')">🎯</span>
+                                <span onclick="changeEmoji(1, '📖')">📖</span>
+                            </div>
+                        </div>
+                        <div class="text-block">
+                            <div class="item-title" contenteditable="true" id="title-1">1. Metaphor</div>
+                            <div class="item-desc" contenteditable="true" id="desc-1">A comparison without using 'like' or 'as'.</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-content">
+                        <div class="example-label" contenteditable="true" id="elbl-1">Example:</div>
+                        <div class="example-text" contenteditable="true" id="etxt-1">"Time is a thief."</div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="device-item item-2">
+                    <div class="left-content">
+                        <div class="icon-container" onclick="toggleEmojiPicker(2)">
+                            <div class="icon-circle"><span id="ico-2">🌿</span></div>
+                            <div class="icon-hint">✎</div>
+                            <div class="emoji-picker" id="picker-2">
+                                <span onclick="changeEmoji(2, '🌿')">🌿</span>
+                                <span onclick="changeEmoji(2, '🌸')">🌸</span>
+                                <span onclick="changeEmoji(2, '🍃')">🍃</span>
+                                <span onclick="changeEmoji(2, '💧')">💧</span>
+                                <span onclick="changeEmoji(2, '✨')">✨</span>
+                                <span onclick="changeEmoji(2, '🍎')">🍎</span>
+                                <span onclick="changeEmoji(2, '🔍')">🔍</span>
+                                <span onclick="changeEmoji(2, '📝')">📝</span>
+                            </div>
+                        </div>
+                        <div class="text-block">
+                            <div class="item-title" contenteditable="true" id="title-2">2. Simile</div>
+                            <div class="item-desc" contenteditable="true" id="desc-2">A comparison using 'like' or 'as'.</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-content">
+                        <div class="example-label" contenteditable="true" id="elbl-2">Example:</div>
+                        <div class="example-text" contenteditable="true" id="etxt-2">"Her smile was like sunshine."</div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="device-item item-3">
+                    <div class="left-content">
+                        <div class="icon-container" onclick="toggleEmojiPicker(3)">
+                            <div class="icon-circle"><span id="ico-3">📢</span></div>
+                            <div class="icon-hint">✎</div>
+                            <div class="emoji-picker" id="picker-3">
+                                <span onclick="changeEmoji(3, '📢')">📢</span>
+                                <span onclick="changeEmoji(3, '💬')">💬</span>
+                                <span onclick="changeEmoji(3, '🗣️')">🗣️</span>
+                                <span onclick="changeEmoji(3, '💨')">💨</span>
+                                <span onclick="changeEmoji(3, '🤝')">🤝</span>
+                                <span onclick="changeEmoji(3, '🦊')">🦊</span>
+                                <span onclick="changeEmoji(3, '🎭')">🎭</span>
+                                <span onclick="changeEmoji(3, '⏰')">⏰</span>
+                            </div>
+                        </div>
+                        <div class="text-block">
+                            <div class="item-title" contenteditable="true" id="title-3">3. Personification</div>
+                            <div class="item-desc" contenteditable="true" id="desc-3">Giving human qualities to non-human things.</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-content">
+                        <div class="example-label" contenteditable="true" id="elbl-3">Example:</div>
+                        <div class="example-text" contenteditable="true" id="etxt-3">"The wind whispered through the trees."</div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="device-item item-4">
+                    <div class="left-content">
+                        <div class="icon-container" onclick="toggleEmojiPicker(4)">
+                            <div class="icon-circle"><span id="ico-4">📚</span></div>
+                            <div class="icon-hint">✎</div>
+                            <div class="emoji-picker" id="picker-4">
+                                <span onclick="changeEmoji(4, '📚')">📚</span>
+                                <span onclick="changeEmoji(4, '💥')">💥</span>
+                                <span onclick="changeEmoji(4, '🚀')">🚀</span>
+                                <span onclick="changeEmoji(4, '💯')">💯</span>
+                                <span onclick="changeEmoji(4, '🐘')">🐘</span>
+                                <span onclick="changeEmoji(4, '🏃')">🏃</span>
+                                <span onclick="changeEmoji(4, '🌋')">🌋</span>
+                                <span onclick="changeEmoji(4, '🍕')">🍕</span>
+                            </div>
+                        </div>
+                        <div class="text-block">
+                            <div class="item-title" contenteditable="true" id="title-4">4. Hyperbole</div>
+                            <div class="item-desc" contenteditable="true" id="desc-4">Exaggerated statements not meant to be taken literally.</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-content">
+                        <div class="example-label" contenteditable="true" id="elbl-4">Example:</div>
+                        <div class="example-text" contenteditable="true" id="etxt-4">"I'm so hungry I could eat a horse!"</div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="device-item item-5">
+                    <div class="left-content">
+                        <div class="icon-container" onclick="toggleEmojiPicker(5)">
+                            <div class="icon-circle"><span id="ico-5">🌧️</span></div>
+                            <div class="icon-hint">✎</div>
+                            <div class="emoji-picker" id="picker-5">
+                                <span onclick="changeEmoji(5, '🌧️')">🌧️</span>
+                                <span onclick="changeEmoji(5, '👁️')">👁️</span>
+                                <span onclick="changeEmoji(5, '🌹')">🌹</span>
+                                <span onclick="changeEmoji(5, '🌊')">🌊</span>
+                                <span onclick="changeEmoji(5, '🍋')">🍋</span>
+                                <span onclick="changeEmoji(5, '🔔')">🔔</span>
+                                <span onclick="changeEmoji(5, '🎨')">🎨</span>
+                                <span onclick="changeEmoji(5, '👃')">👃</span>
+                            </div>
+                        </div>
+                        <div class="text-block">
+                            <div class="item-title" contenteditable="true" id="title-5">5. Imagery</div>
+                            <div class="item-desc" contenteditable="true" id="desc-5">Descriptive language that appeals to the senses.</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="right-content">
+                        <div class="example-label" contenteditable="true" id="elbl-5">Example:</div>
+                        <div class="example-text" contenteditable="true" id="etxt-5">"The smell of rain on the pavement was heavenly."</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="footer-section">
+                <p class="footer-text" contenteditable="true" id="txt-footer">Small devices. Big impact.</p>
+                <div class="closing-wish" contenteditable="true" id="txt-wish">♥ Happy Reading! ♥</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bottom Toolbar Menu -->
+    <div class="toolbar">
+        <button class="btn btn-draft" onclick="saveDraftManual()">💾 Simpan Draft</button>
+        <button class="btn btn-reset" onclick="resetDefault()">🔄 Reset Selesai</button>
+        <button class="btn btn-download" onclick="downloadJPG()">📸 Download JPG (4:5)</button>
+    </div>
+
+    <script>
+        // Toggle Emoji Picker Dropdown
+        function toggleEmojiPicker(id) {
+            event.stopPropagation();
+            // Close all pickers first
+            for (let i = 1; i <= 5; i++) {
+                if(i !== id) document.getElementById('picker-' + i).style.display = 'none';
+            }
+            const picker = document.getElementById('picker-' + id);
+            picker.style.display = picker.style.display === 'grid' ? 'none' : 'grid';
+        }
+
+        // Change Emoji
+        function changeEmoji(id, emoji) {
+            event.stopPropagation();
+            document.getElementById('ico-' + id).innerText = emoji;
+            document.getElementById('picker-' + id).style.display = 'none';
+            autoSave();
+        }
+
+        // Close dropdowns when clicking outside
+        window.onclick = function() {
+            for (let i = 1; i <= 5; i++) {
+                document.getElementById('picker-' + i).style.display = 'none';
+            }
+        }
+
+        // Auto-save logic to LocalStorage
+        const fields = [
+            'txt-title', 'txt-accent', 'txt-tagline', 'txt-footer', 'txt-wish',
+            'title-1', 'desc-1', 'elbl-1', 'etxt-1', 'ico-1',
+            'title-2', 'desc-2', 'elbl-2', 'etxt-2', 'ico-2',
+            'title-3', 'desc-3', 'elbl-3', 'etxt-3', 'ico-3',
+            'title-4', 'desc-4', 'elbl-4', 'etxt-4', 'ico-4',
+            'title-5', 'desc-5', 'elbl-5', 'etxt-5', 'ico-5'
+        ];
+
+        function autoSave() {
+            fields.forEach(field => {
+                const el = document.getElementById(field);
+                if (el.tagName === 'SPAN') {
+                    localStorage.setItem(field, el.innerText);
+                } else {
+                    localStorage.setItem(field, el.innerHTML);
+                }
+            });
+        }
+
+        function saveDraftManual() {
+            autoSave();
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            setTimeout(() => { status.style.display = 'none'; }, 3000);
+        }
+
+        // Load Draft from LocalStorage
+        function loadDraft() {
+            fields.forEach(field => {
+                const savedValue = localStorage.getItem(field);
+                if (savedValue) {
+                    const el = document.getElementById(field);
+                    if (el.tagName === 'SPAN') {
+                        el.innerText = savedValue;
+                    } else {
+                        el.innerHTML = savedValue;
+                    }
+                }
+            });
+        }
+
+        // Attach input listeners for live typing auto-save
+        fields.forEach(field => {
+            const el = document.getElementById(field);
+            el.addEventListener('input', autoSave);
+        });
+
+        // Reset to default original values
+        function resetDefault() {
+            if (confirm("Apakah Anda yakin ingin menghapus draft dan mengembalikan teks ke bawaan asli asli?")) {
+                localStorage.clear();
+                window.location.reload();
+            }
+        }
+
+        // High Quality Download as JPG via html2canvas
+        function downloadJPG() {
+            const element = document.getElementById('infographic-canvas');
+            
+            // Temporarily hide edit icons for clean capture
+            const hints = document.querySelectorAll('.icon-hint');
+            hints.forEach(h => h.style.visibility = 'hidden');
+
+            // Options to ensure high resolution crisp export (2x scale)
+            const options = {
+                scale: 2.5, // 432 * 2.5 = 1080px width (Perfect Instagram Resolution)
+                useCORS: true,
+                backgroundColor: '#fffdfa'
+            };
+
+            html2canvas(element, options).then(canvas => {
+                // Restore hints
+                hints.forEach(h => h.style.visibility = 'visible');
+
+                const link = document.createElement('a');
+                link.download = 'infografis_instagram_4to5.jpg';
+                link.href = canvas.toDataURL('image/jpeg', 0.95);
+                link.click();
+            });
+        }
+
+        // Run on load
+        window.onload = loadDraft;
+    </script>
+</body>
+</html>
